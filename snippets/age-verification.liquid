@@ -1,0 +1,49 @@
+<div id="qb-overlay" style="display:none; position:fixed; inset:0; z-index:99999; background:#0a0705; align-items:center; justify-content:center;">
+  <div id="qb-card" style="background:#111009; border:1px solid rgba(200,134,10,0.3); border-radius:4px; max-width:420px; width:100%; padding:3.2rem 2.8rem; display:flex; flex-direction:column; align-items:center; gap:1.6rem; text-align:center;">
+
+    <div style="width:1px; height:3.2rem; background:linear-gradient(to bottom, transparent, rgba(200,134,10,0.6), transparent);"></div>
+
+    <p style="margin:0; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:#c8860a; font-family:sans-serif;">Quatbourrut · Rhums Arrangés</p>
+
+    <h2 style="margin:0; font-size:1.75rem; line-height:1.25; font-weight:400; color:#f5ead8; font-family:Georgia,'Times New Roman',serif;">
+      Ce site est réservé<br>
+      <em style="font-style:italic; color:#c8860a; display:block;">aux personnes majeures.</em>
+    </h2>
+
+    <p style="margin:0; font-size:0.85rem; line-height:1.6; font-style:italic; color:rgba(245,234,216,0.55); font-family:Georgia,'Times New Roman',serif;">
+      En entrant sur ce site, vous confirmez avoir&nbsp;18&nbsp;ans ou plus
+      et accepter nos conditions.
+    </p>
+
+    <div style="display:flex; flex-direction:column; gap:0.8rem; width:100%; margin-top:0.4rem;">
+      <button onclick="qbOui()" style="background:#c8860a; color:#0a0705; border:none; border-radius:2px; padding:1rem 1.6rem; font-size:0.72rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; font-family:sans-serif;">OUI, J'AI 18 ANS OU PLUS</button>
+      <button onclick="qbNon()" style="background:transparent; color:rgba(200,134,10,0.7); border:1px solid rgba(200,134,10,0.2); border-radius:2px; padding:0.9rem 1.6rem; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; font-family:sans-serif;">NON, JE N'AI PAS 18 ANS</button>
+    </div>
+
+    <p style="margin:0; font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase; color:rgba(245,234,216,0.25); font-family:sans-serif;">L'abus d'alcool est dangereux pour la santé.</p>
+
+    <div style="width:1px; height:3.2rem; background:linear-gradient(to bottom, transparent, rgba(200,134,10,0.6), transparent);"></div>
+
+  </div>
+</div>
+
+<script>
+  if (localStorage.getItem('qb_ok')) {
+    // déjà vérifié — ne rien faire
+  } else {
+    window.addEventListener('load', function() {
+      document.getElementById('qb-overlay').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  function qbOui() {
+    localStorage.setItem('qb_ok', '1');
+    document.getElementById('qb-overlay').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  function qbNon() {
+    window.location.href = 'https://www.google.com';
+  }
+</script>

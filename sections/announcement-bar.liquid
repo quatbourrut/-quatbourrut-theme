@@ -1,0 +1,48 @@
+<div class="announcement-bar color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    {%- for block in section.blocks -%}
+      <p class="announcement-bar__message h5" style="text-align:center; padding:10px; margin:0;">
+        {{ block.settings.text | escape }}
+      </p>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Barre d'annonce",
+  "max_blocks": 1,
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Couleurs",
+      "default": "scheme-4"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Annonce",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "LIVRAISON OFFERTE DÈS 80€ D'ACHAT",
+          "label": "Texte de l'annonce"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Barre d'annonce",
+      "blocks": [
+        {
+          "type": "announcement"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

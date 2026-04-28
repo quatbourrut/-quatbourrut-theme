@@ -1,0 +1,16 @@
+{% layout none %}
+User-agent: *
+Disallow: /cart
+Disallow: /cart/
+Disallow: /checkout
+Disallow: /checkout/
+Disallow: /account
+Disallow: /account/
+Disallow: /orders
+Disallow: /orders/
+Disallow: /collections/*sort_by*
+Disallow: /collections/*+*
+Disallow: /search
+Allow: /
+
+Sitemap: {{ shop.url }}/sitemap.xml

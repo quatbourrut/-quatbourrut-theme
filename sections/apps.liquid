@@ -1,0 +1,86 @@
+<div
+  class="{% if section.settings.include_margins %}page-width{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+  data-apps-section="{{ section.id }}"
+>
+  {%- for block in section.blocks -%}
+    {% render block %}
+  {%- endfor -%}
+</div>
+
+<script>
+(function() {
+  var sectionEl = document.querySelector('[data-apps-section="{{ section.id }}"]');
+  if (!sectionEl) return;
+
+  /*
+    MutationObserver — adds loading="lazy" + decoding="async" to any <img>
+    injected by app blocks (Instafeed, etc.) that don't set these attributes.
+    Runs only when mutations occur, zero cost otherwise.
+  */
+  var imgObserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      mutation.addedNodes.forEach(function(node) {
+        if (node.nodeType !== 1) return;
+        var imgs = node.nodeName === 'IMG' ? [node] : Array.from(node.querySelectorAll('img'));
+        imgs.forEach(function(img) {
+          if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+          if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+          if (!img.hasAttribute('fetchpriority')) img.setAttribute('fetchpriority', 'low');
+        });
+      });
+    });
+  });
+
+  /*
+    IntersectionObserver — delays the MutationObserver activation until the
+    section is 200px from entering the viewport. This way, if the section is
+    in the footer, no image observation overhead runs during initial paint.
+  */
+  if ('IntersectionObserver' in window) {
+    var viewportObserver = new IntersectionObserver(function(entries, self) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          imgObserver.observe(sectionEl, { childList: true, subtree: true });
+          /* Lazify any images already in the DOM at intersection time */
+          sectionEl.querySelectorAll('img:not([loading])').forEach(function(img) {
+            img.setAttribute('loading', 'lazy');
+            img.setAttribute('decoding', 'async');
+            img.setAttribute('fetchpriority', 'low');
+          });
+          self.disconnect();
+        }
+      });
+    }, { rootMargin: '200px' });
+    viewportObserver.observe(sectionEl);
+  } else {
+    /* Fallback for browsers without IntersectionObserver */
+    imgObserver.observe(sectionEl, { childList: true, subtree: true });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.apps.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "include_margins",
+      "default": true,
+      "label": "t:sections.apps.settings.include_margins.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.apps.presets.name"
+    }
+  ]
+}
+{% endschema %}

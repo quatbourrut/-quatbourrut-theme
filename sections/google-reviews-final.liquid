@@ -1,0 +1,94 @@
+<section class="google-reviews-final" style="padding: 60px 0; background: #fdfdfd; overflow: hidden;">
+  <div class="page-width">
+    <h2 style="text-align: center; margin-bottom: 40px; font-weight: bold;">Ce que nos clients pensent de nous</h2>
+    
+    {%- assign reviews_data = shop.metafields.custom.liste_avis_google.value -%}
+    {%- assign avis = reviews_data.liste | default: reviews_data -%}
+
+    {%- if avis != blank -%}
+      <div class="marquee-container">
+        <div class="marquee-content">
+          
+          {%- comment -%} Premier passage des avis {%- endcomment -%}
+          {%- for item in avis -%}
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <div class="review-text">"{{ item.text | default: item.comment | default: item.texte | truncate: 180 }}"</div>
+              <div class="review-footer">
+                <strong class="author-name">{{ item.author | default: item.reviewer.displayName | default: "Client" }}</strong>
+                <span class="google-verify">Avis Google</span>
+              </div>
+            </div>
+          {%- endfor -%}
+
+          {%- comment -%} DEUXIÈME passage (obligatoire pour l'effet infini sans trou) {%- endcomment -%}
+          {%- for item in avis -%}
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <div class="review-text">"{{ item.text | default: item.comment | default: item.texte | truncate: 180 }}"</div>
+              <div class="review-footer">
+                <strong class="author-name">{{ item.author | default: item.reviewer.displayName | default: "Client" }}</strong>
+                <span class="google-verify">Avis Google</span>
+              </div>
+            </div>
+          {%- endfor -%}
+
+        </div>
+      </div>
+    {%- else -%}
+      <p style="text-align: center; color: #999;">Chargement des avis...</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .marquee-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 20px 0;
+  }
+
+  .marquee-content {
+    display: flex;
+    width: max-content;
+    animation: scroll-left 40s linear infinite; /* Ajuste '40s' pour la vitesse */
+  }
+
+  /* Pause au survol */
+  .marquee-content:hover {
+    animation-play-state: paused;
+  }
+
+  .review-card {
+    width: 300px;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid #eee;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+    margin-right: 25px; /* Espace entre les cartes */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .stars { color: #ffb400; font-size: 18px; margin-bottom: 12px; }
+  .review-text { font-size: 14px; line-height: 1.5; color: #444; min-height: 80px; margin-bottom: 15px; font-style: italic; }
+  .review-footer { border-top: 1px solid #f9f9f9; padding-top: 12px; }
+  .author-name { color: #000; font-size: 13px; display: block; margin-bottom: 2px; }
+  .google-verify { font-size: 10px; color: #bbb; text-transform: uppercase; }
+
+  /* L'animation magique */
+  @keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* On scroll jusqu'à la moitié car on a doublé les avis */
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Avis Défilant Infini",
+  "presets": [{"name": "Avis Défilant Infini"}]
+}
+{% endschema %}
