@@ -1,0 +1,7 @@
+node_modules/
+.env
+.DS_Store
+*.sh
+download-and-compress.js
+package.json
+package-lock.json
