@@ -393,8 +393,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 </style>
 <style>
+.button:not([disabled]) {
+  background-color: #c8860a !important;
+  color: #0a0705 !important;
+  border: none !important;
+  border-radius: 4px !important;
+}
+
 .button:not([disabled]):hover {
-  filter: brightness(1.2) !important;
+  background-color: #e8a020 !important;
+  color: #0a0705 !important;
   transform: translateY(-2px) !important;
   box-shadow: 0 4px 20px rgba(200,134,10,0.5) !important;
   transition: all 0.3s ease !important;
