@@ -1,0 +1,424 @@
+/* ══════════════════════════════════════════════
+   QUATBOURRUT — Design premium Dune & Atelier
+   CSS custom centralisé (ne pas modifier base.css)
+   ══════════════════════════════════════════════ */
+
+/* ── Variables ── */
+:root {
+  --qb-amber: #c8860a;
+  --qb-dark: #1a1208;
+  --qb-cream: #faf8f4;
+  --qb-sand: #6b5a3e;
+  --qb-font-display: 'Playfair Display', Georgia, serif;
+  --qb-font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* ── Typographie globale ── */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4 {
+  font-family: var(--qb-font-display);
+}
+
+body {
+  font-family: var(--qb-font-body);
+}
+
+/* ── Animations keyframes ── */
+@keyframes aurora {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes qb-float {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+  50%       { transform: translateY(-28px) scale(1.08); opacity: 0.6; }
+}
+
+@keyframes qb-scroll-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(8px); }
+}
+
+@keyframes qb-fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Scroll reveal ── */
+.qb-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.qb-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════════════════════
+   BARRE DE LIVRAISON
+   ══════════════════════════════════════════════ */
+.qb-delivery-bar {
+  background: var(--qb-dark);
+  color: #f7eed7;
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--qb-font-body);
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  position: relative;
+  z-index: 1001;
+}
+
+@media screen and (max-width: 749px) {
+  .qb-delivery-bar {
+    font-size: 1.15rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   HEADER PREMIUM
+   ══════════════════════════════════════════════ */
+.header-wrapper {
+  background: rgba(250, 248, 244, 0.97) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Logo texte premium */
+.header__heading-link .h2 {
+  font-family: var(--qb-font-display);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  font-size: 2.2rem;
+  color: var(--qb-dark);
+}
+
+/* Icônes ambre */
+.header__icon {
+  color: var(--qb-amber) !important;
+}
+.header__icon svg {
+  color: var(--qb-amber);
+}
+
+/* Navigation */
+.header__menu-item,
+.list-menu__item--link {
+  font-family: var(--qb-font-body);
+  font-weight: 500;
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+  transition: color 0.2s ease;
+}
+.header__menu-item:hover .header__active-menu-item,
+.list-menu__item--link:hover {
+  color: var(--qb-amber);
+}
+
+/* ══════════════════════════════════════════════
+   HERO AURORA — banner sans image
+   ══════════════════════════════════════════════ */
+.banner--qb-aurora {
+  background: linear-gradient(135deg, #c4a882, #8b6914, #1a0e05, #3d2a04, #c4a882);
+  background-size: 400% 400%;
+  animation: aurora 14s ease infinite;
+  min-height: 85vh !important;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* Grain overlay */
+.banner--qb-aurora::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+.banner--qb-aurora .banner__content {
+  position: relative;
+  z-index: 3;
+}
+
+.banner--qb-aurora .banner__box {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  max-width: 680px;
+}
+
+/* Contenu hero */
+.banner--qb-aurora .banner__heading {
+  font-family: var(--qb-font-display);
+  font-weight: 900;
+  font-size: clamp(4rem, 8vw, 8rem);
+  color: #faf8f4;
+  line-height: 1.05;
+  text-shadow: 0 2px 40px rgba(26, 18, 8, 0.5);
+}
+
+.banner--qb-aurora .banner__text {
+  font-family: var(--qb-font-display);
+  font-style: italic;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  color: var(--qb-amber);
+}
+
+/* Particules flottantes */
+.qb-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+}
+.qb-particle:nth-child(1) {
+  width: 80px; height: 80px;
+  background: rgba(200, 134, 10, 0.15);
+  top: 15%; left: 8%;
+  animation: qb-float 8s ease-in-out infinite;
+}
+.qb-particle:nth-child(2) {
+  width: 50px; height: 50px;
+  background: rgba(196, 168, 130, 0.2);
+  top: 60%; left: 75%;
+  animation: qb-float 6s ease-in-out infinite 1s;
+}
+.qb-particle:nth-child(3) {
+  width: 120px; height: 120px;
+  background: rgba(139, 105, 20, 0.1);
+  top: 78%; left: 15%;
+  animation: qb-float 10s ease-in-out infinite 2s;
+}
+.qb-particle:nth-child(4) {
+  width: 40px; height: 40px;
+  background: rgba(200, 134, 10, 0.25);
+  top: 28%; left: 85%;
+  animation: qb-float 7s ease-in-out infinite 0.5s;
+}
+.qb-particle:nth-child(5) {
+  width: 60px; height: 60px;
+  background: rgba(196, 168, 130, 0.15);
+  top: 48%; left: 52%;
+  animation: qb-float 9s ease-in-out infinite 3s;
+}
+
+/* Scroll indicator */
+.qb-scroll-indicator {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 4;
+  animation: qb-scroll-bounce 2.2s ease-in-out infinite;
+}
+.qb-scroll-indicator::before {
+  content: 'SCROLL';
+  font-family: var(--qb-font-body);
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: rgba(250, 248, 244, 0.45);
+}
+.qb-scroll-indicator span {
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(250,248,244,0.5), transparent);
+}
+
+/* ══════════════════════════════════════════════
+   CARDS PRODUIT PREMIUM
+   ══════════════════════════════════════════════ */
+.card-wrapper {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card--standard {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 24px rgba(26, 18, 8, 0.08) !important;
+  border: 1px solid rgba(200, 134, 10, 0.1) !important;
+  overflow: hidden;
+  background: #fff;
+}
+
+.card__media img {
+  transition: transform 0.5s ease;
+}
+.card-wrapper:hover .card__media img {
+  transform: scale(1.05);
+}
+
+.card__heading {
+  font-family: var(--qb-font-display);
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: var(--qb-dark);
+}
+.card__heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.price__regular .price-item,
+.price-item--regular {
+  font-family: var(--qb-font-display);
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--qb-amber);
+}
+
+/* Badge Bestseller */
+.qb-badge-bestseller {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
+  background: var(--qb-dark);
+  color: #faf8f4;
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.9rem;
+  border-radius: 100px;
+  z-index: 2;
+}
+
+/* Bouton ATC — toujours visible sur mobile */
+.card-wrapper .quick-add {
+  padding: 0 1.2rem 1.4rem;
+}
+@media screen and (max-width: 749px) {
+  .card-wrapper .quick-add {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .card-wrapper .quick-add .button {
+    background: var(--qb-amber) !important;
+    color: #faf8f4 !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 1.2rem !important;
+    font-family: var(--qb-font-display) !important;
+    font-weight: 700 !important;
+    font-size: 1.5rem !important;
+    width: 100%;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   TRUST BADGES
+   ══════════════════════════════════════════════ */
+.qb-trust-badges {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.6rem;
+  padding: 1.2rem 1.4rem;
+  background: rgba(250, 248, 244, 0.8);
+  border-radius: 8px;
+  border: 1px solid rgba(200, 134, 10, 0.12);
+}
+.qb-trust-badges span {
+  font-family: var(--qb-font-body);
+  font-size: 1.25rem;
+  color: var(--qb-sand);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ══════════════════════════════════════════════
+   STICKY ATC MOBILE
+   ══════════════════════════════════════════════ */
+.qb-sticky-atc {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.2rem 1.6rem calc(1.2rem + env(safe-area-inset-bottom));
+  background: rgba(250, 248, 244, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 -4px 24px rgba(26, 18, 8, 0.12);
+  z-index: 900;
+}
+.qb-sticky-atc__btn {
+  width: 100%;
+  background: var(--qb-amber);
+  color: #faf8f4;
+  border: none;
+  border-radius: 6px;
+  padding: 1.4rem;
+  font-family: var(--qb-font-display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+.qb-sticky-atc__btn:hover {
+  background: #e8a020;
+  box-shadow: 0 4px 20px rgba(200, 134, 10, 0.4);
+}
+@media screen and (max-width: 749px) {
+  .qb-sticky-atc.qb-sticky-atc--visible {
+    display: block;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   FIL D'ARIANE
+   ══════════════════════════════════════════════ */
+.qb-breadcrumb {
+  font-family: var(--qb-font-body);
+  font-size: 1.3rem;
+  color: var(--qb-sand);
+  padding: 1rem 0 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+}
+.qb-breadcrumb a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.qb-breadcrumb a:hover { color: var(--qb-amber); }
+.qb-breadcrumb__sep {
+  color: #a08060;
+  user-select: none;
+}
+
+/* ══════════════════════════════════════════════
+   SECTION COLLECTION — titre premium
+   ══════════════════════════════════════════════ */
+.collection__title .title {
+  font-family: var(--qb-font-display);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--qb-dark);
+}
+
+/* ══════════════════════════════════════════════
+   PAGE PRODUIT
+   ══════════════════════════════════════════════ */
+.product__title h1 {
+  font-family: var(--qb-font-display);
+  font-weight: 700;
+}

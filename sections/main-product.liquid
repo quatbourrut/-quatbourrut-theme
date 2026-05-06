@@ -72,6 +72,7 @@
   {%- endif -%}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
+  {%- render 'breadcrumb' -%}
   <div class="page-width">
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
@@ -504,6 +505,11 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
+                <div class="qb-trust-badges">
+                  <span>🔒 Paiement sécurisé</span>
+                  <span>📦 Livraison 48h</span>
+                  <span>🌿 Artisanal</span>
+                </div>
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
@@ -753,6 +759,47 @@
 
     <script type="application/ld+json">
       {{ product | structured_data }}
+    </script>
+
+    {%- if product.metafields.reviews.rating.value != blank -%}
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": {{ product.title | json }},
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "{{ product.metafields.reviews.rating.value.rating }}",
+          "bestRating": "{{ product.metafields.reviews.rating.value.scale_max }}",
+          "reviewCount": "{{ product.metafields.reviews.rating_count }}"
+        }
+      }
+      </script>
+    {%- endif -%}
+
+    <div class="qb-sticky-atc no-js-hidden" id="QbStickyAtc-{{ section.id }}" aria-hidden="true">
+      <button
+        class="qb-sticky-atc__btn"
+        onclick="document.getElementById('{{ product_form_id }}').querySelector('[name=add]').click()"
+        aria-label="{{ 'products.product.add_to_cart' | t }}"
+      >
+        {{ 'products.product.add_to_cart' | t }}
+      </button>
+    </div>
+    <script>
+      (function () {
+        var stickyAtc = document.getElementById('QbStickyAtc-{{ section.id }}');
+        var mainForm  = document.getElementById('{{ product_form_id }}');
+        if (!stickyAtc || !mainForm) return;
+        var mainBtn = mainForm.querySelector('[name=add]');
+        if (!mainBtn) return;
+        var observer = new IntersectionObserver(function (entries) {
+          var visible = entries[0].isIntersecting;
+          stickyAtc.classList.toggle('qb-sticky-atc--visible', !visible);
+          stickyAtc.setAttribute('aria-hidden', String(visible));
+        }, { threshold: 0.1 });
+        observer.observe(mainBtn);
+      })();
     </script>
   </div>
 </product-info>

@@ -118,6 +118,9 @@
   endif
 %}
 
+<div class="qb-delivery-bar">
+  🌴 Livraison offerte dès 80€ &nbsp;·&nbsp; Artisan Landais &nbsp;·&nbsp; 16 saveurs exclusives
+</div>
 <{{ header_tag }}
   {% if header_tag == 'sticky-header' %}
     data-sticky-type="{{ section.settings.sticky_header_type }}"
@@ -435,15 +438,16 @@
       "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
     {% endif %}
     "sameAs": [
-      {{ settings.social_twitter_link | json }},
-      {{ settings.social_facebook_link | json }},
-      {{ settings.social_pinterest_link | json }},
-      {{ settings.social_instagram_link | json }},
-      {{ settings.social_tiktok_link | json }},
-      {{ settings.social_tumblr_link | json }},
-      {{ settings.social_snapchat_link | json }},
-      {{ settings.social_youtube_link | json }},
-      {{ settings.social_vimeo_link | json }}
+      {%- assign soc_comma = false -%}
+      {%- if settings.social_twitter_link != blank -%}{{ settings.social_twitter_link | json }}{%- assign soc_comma = true -%}{%- endif -%}
+      {%- if settings.social_facebook_link != blank -%}{%- if soc_comma -%},{%- endif -%}{{ settings.social_facebook_link | json }}{%- assign soc_comma = true -%}{%- endif -%}
+      {%- if settings.social_pinterest_link != blank -%}{%- if soc_comma -%},{%- endif -%}{{ settings.social_pinterest_link | json }}{%- assign soc_comma = true -%}{%- endif -%}
+      {%- if settings.social_instagram_link != blank -%}{%- if soc_comma -%},{%- endif -%}{{ settings.social_instagram_link | json }}{%- assign soc_comma = true -%}{%- endif -%}
+      {%- if settings.social_tiktok_link != blank -%}{%- if soc_comma -%},{%- endif -%}{{ settings.social_tiktok_link | json }}{%- assign soc_comma = true -%}{%- endif -%}
+      {%- if settings.social_tumblr_link != blank -%}{%- if soc_comma -%},{%- endif -%}{{ settings.social_tumblr_link | json }}{%- assign soc_comma = true -%}{%- endif -%}
+      {%- if settings.social_snapchat_link != blank -%}{%- if soc_comma -%},{%- endif -%}{{ settings.social_snapchat_link | json }}{%- assign soc_comma = true -%}{%- endif -%}
+      {%- if settings.social_youtube_link != blank -%}{%- if soc_comma -%},{%- endif -%}{{ settings.social_youtube_link | json }}{%- assign soc_comma = true -%}{%- endif -%}
+      {%- if settings.social_vimeo_link != blank -%}{%- if soc_comma -%},{%- endif -%}{{ settings.social_vimeo_link | json }}{%- endif -%}
     ],
     "url": {{ request.origin | append: page.url | json }}
   }
