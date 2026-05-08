@@ -28,21 +28,21 @@
 </div>
 
 <script>
-  if (localStorage.getItem('qb_ok')) {
-    // déjà vérifié — ne rien faire
-  } else {
-    window.addEventListener('load', function() {
-      document.getElementById('qb-overlay').style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    });
-  }
+  (function() {
+    if (!localStorage.getItem('qb_ok')) {
+      var o = document.getElementById('qb-overlay');
+      if (o) {
+        o.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+  })();
 
   function qbOui() {
-    localStorage.setItem('qb_ok', '1');
+    localStorage.setItem('qb_ok','1');
     document.getElementById('qb-overlay').style.display = 'none';
     document.body.style.overflow = '';
   }
-
   function qbNon() {
     window.location.href = 'https://www.google.com';
   }
