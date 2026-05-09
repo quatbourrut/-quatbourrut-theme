@@ -107,21 +107,27 @@ h1, h2, h3, h4 { font-family: var(--qb-font-display) !important; }
 }
 
 /* === HERO BANNIÈRE === */
-.banner { min-height: 70vh !important; }
-.banner__media img { object-fit: cover !important; }
+.banner, .slideshow {
+  width: 100% !important;
+  max-width: 100% !important;
+}
 
-/* Bannière pleine largeur */
-.slideshow,
-.banner,
-.slideshow__slide,
-.banner__media {
-  width: 100vw !important;
-  max-width: 100vw !important;
-  margin-left: calc(-50vw + 50%) !important;
+.banner__media, .slideshow__media {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.banner__media img, .slideshow__slide img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
 }
 
 @media (max-width: 749px) {
-  .banner { min-height: 50vh !important; }
+  .banner { min-height: 40vh !important; }
+  .banner__media img { object-position: 60% center !important; }
+  .slideshow { min-height: 40vh !important; }
 }
 
 /* Hero aurora (sans image) */
