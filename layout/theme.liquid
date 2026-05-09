@@ -394,20 +394,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
 </style>
 <style>
-.button:not([disabled]) {
-  background-color: #c8860a !important;
-  color: #0a0705 !important;
-  border: none !important;
-  border-radius: 4px !important;
-}
-
-.button:not([disabled]):hover {
-  background-color: #e8a020 !important;
-  color: #0a0705 !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 20px rgba(200,134,10,0.5) !important;
-  transition: all 0.3s ease !important;
-}
+  #qb-ticker { background:#1a1208; overflow:hidden; padding:8px 0; }
+  .qb-ticker-inner {
+    display:flex; gap:40px; white-space:nowrap;
+    animation:ticker 25s linear infinite;
+    color:rgba(250,244,232,0.8);
+    font-size:12px; letter-spacing:0.15em; text-transform:uppercase;
+    font-family:'DM Sans',sans-serif;
+  }
+  @keyframes ticker { to { transform:translateX(-50%); } }
 </style>
   </head>
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
@@ -415,6 +410,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NPL6B762"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+
+    <div id="qb-ticker">
+      <div class="qb-ticker-inner">
+        🌴 Livraison offerte dès 80€ &nbsp;·&nbsp;
+        Artisan Landais &nbsp;·&nbsp;
+        16 saveurs exclusives &nbsp;·&nbsp;
+        Fait main avec passion &nbsp;·&nbsp;
+        🌴 Livraison offerte dès 80€ &nbsp;·&nbsp;
+        Artisan Landais &nbsp;·&nbsp;
+        16 saveurs exclusives &nbsp;·&nbsp;
+        Fait main avec passion
+      </div>
+    </div>
+
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
@@ -491,19 +500,44 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {%- render 'age-verification' -%}
 
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        var observer = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-              observer.unobserve(entry.target);
+      document.addEventListener('DOMContentLoaded', function() {
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) {
+            if (e.isIntersecting) {
+              e.target.classList.add('visible');
+              obs.unobserve(e.target);
             }
           });
-        }, { threshold: 0.12 });
-        document.querySelectorAll('.qb-reveal').forEach(function (el) {
-          observer.observe(el);
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.card-wrapper, .banner, .rich-text').forEach(function(el) {
+          el.classList.add('qb-reveal');
+          obs.observe(el);
         });
       });
     </script>
+
+    {%- if template contains 'product' -%}
+      <div class="qb-sticky-atc" id="qbStickyAtc" style="display:none;">
+        <div style="font-family:var(--qb-font-display);font-size:14px;font-weight:700;color:var(--qb-dark);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="qbStickyTitle"></div>
+        <button class="button" onclick="document.querySelector('.product-form__submit').click()">
+          Ajouter au panier
+        </button>
+      </div>
+      <script>
+        if (window.innerWidth <= 749) {
+          var atcBtn = document.querySelector('.product-form__submit');
+          var sticky = document.getElementById('qbStickyAtc');
+          var titleEl = document.getElementById('qbStickyTitle');
+          if (atcBtn && sticky) {
+            var h1 = document.querySelector('.product__title h1, .product__title .h1');
+            if (h1 && titleEl) titleEl.textContent = h1.textContent.trim();
+            var obs2 = new IntersectionObserver(function(e) {
+              sticky.style.display = e[0].isIntersecting ? 'none' : 'flex';
+            }, { threshold: 0.1 });
+            obs2.observe(atcBtn);
+          }
+        }
+      </script>
+    {%- endif -%}
   </body>
 </html>

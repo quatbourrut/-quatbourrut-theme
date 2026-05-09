@@ -216,6 +216,30 @@
   </div>
 {% endif %}
                   </div>
+                  <div class="qb-tabs">
+                    <div class="qb-tab-headers">
+                      <button class="qb-tab-btn active" onclick="qbTab(this,'desc')">Description</button>
+                      <button class="qb-tab-btn" onclick="qbTab(this,'mace')">La Macération</button>
+                      <button class="qb-tab-btn" onclick="qbTab(this,'degu')">Dégustation</button>
+                    </div>
+                    <div id="qb-tab-desc" class="qb-tab-panel active">
+                      {{ product.description }}
+                    </div>
+                    <div id="qb-tab-mace" class="qb-tab-panel">
+                      <p>Nos rhums sont macérés pendant minimum 12 mois dans un rhum agricole blanc sélectionné, avec des ingrédients frais du terroir landais.</p>
+                    </div>
+                    <div id="qb-tab-degu" class="qb-tab-panel">
+                      <p>À déguster frais, sur glace ou en cocktail. Idéal entre 8 et 12°C pour révéler tous les arômes.</p>
+                    </div>
+                  </div>
+                  <script>
+                  function qbTab(btn, id) {
+                    document.querySelectorAll('.qb-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+                    document.querySelectorAll('.qb-tab-panel').forEach(function(p) { p.classList.remove('active'); });
+                    btn.classList.add('active');
+                    document.getElementById('qb-tab-' + id).classList.add('active');
+                  }
+                  </script>
                 {%- endif -%}
               {%- when 'sku' -%}
                 <p
@@ -505,10 +529,11 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
-                <div class="qb-trust-badges">
+                <div class="qb-product-trust">
                   <span>🔒 Paiement sécurisé</span>
                   <span>📦 Livraison 48h</span>
                   <span>🌿 Artisanal</span>
+                  <span>🇫🇷 Fabriqué en France</span>
                 </div>
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
@@ -777,30 +802,6 @@
       </script>
     {%- endif -%}
 
-    <div class="qb-sticky-atc no-js-hidden" id="QbStickyAtc-{{ section.id }}" aria-hidden="true">
-      <button
-        class="qb-sticky-atc__btn"
-        onclick="document.getElementById('{{ product_form_id }}').querySelector('[name=add]').click()"
-        aria-label="{{ 'products.product.add_to_cart' | t }}"
-      >
-        {{ 'products.product.add_to_cart' | t }}
-      </button>
-    </div>
-    <script>
-      (function () {
-        var stickyAtc = document.getElementById('QbStickyAtc-{{ section.id }}');
-        var mainForm  = document.getElementById('{{ product_form_id }}');
-        if (!stickyAtc || !mainForm) return;
-        var mainBtn = mainForm.querySelector('[name=add]');
-        if (!mainBtn) return;
-        var observer = new IntersectionObserver(function (entries) {
-          var visible = entries[0].isIntersecting;
-          stickyAtc.classList.toggle('qb-sticky-atc--visible', !visible);
-          stickyAtc.setAttribute('aria-hidden', String(visible));
-        }, { threshold: 0.1 });
-        observer.observe(mainBtn);
-      })();
-    </script>
   </div>
 </product-info>
 
